@@ -57,7 +57,7 @@ function App() {
       if (l > 0) count = l
       if (l == 'Enter' || l == 'ContextMenu' || l == ' ' || l == 'Backspace') {
         ++count
-        if (count > 29) count = 0
+        if (count > 30) count = 0
         setLetter(count)
       } else {
         if (l.toLowerCase() in enToRu) {
