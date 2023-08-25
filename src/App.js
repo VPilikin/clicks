@@ -1,6 +1,15 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 import { useState, useEffect } from 'react'
+import img0 from './svg/0.svg'
+import img1 from './svg/1.svg'
+import img2 from './svg/2.svg'
+import img3 from './svg/3.svg'
+import img4 from './svg/4.svg'
+import img5 from './svg/5.svg'
+import img6 from './svg/6.svg'
+import img7 from './svg/7.svg'
+import img8 from './svg/8.svg'
 
 function getRandomColor() {
   var letters = '0123456789ABCDEF'
@@ -10,6 +19,8 @@ function getRandomColor() {
   }
   return color
 }
+
+const images = [img0, img1, img2, img3, img4, img5, img6, img7, img8]
 
 const enToRu = {
   q: 'й',
@@ -49,13 +60,23 @@ const enToRu = {
 
 function App() {
   const [letter, setLetter] = useState('')
+  const [img, setImg] = useState(1)
   let count = 0
+
+  useEffect(() => {
+    if (!(letter < 10)) setImg(Math.floor(Math.random() * images.length))
+  })
 
   useEffect(() => {
     const onKeypress = (e) => {
       let l = e.key
       if (l > 0) count = l
-      if (l == 'Enter' || l == 'ContextMenu' || l == ' ' || l == 'Backspace') {
+      if (
+        l === 'Enter' ||
+        l === 'ContextMenu' ||
+        l === ' ' ||
+        l === 'Backspace'
+      ) {
         ++count
         if (count > 30) count = 0
         setLetter(count)
@@ -76,8 +97,24 @@ function App() {
   }, [])
 
   return (
-    <div className="ch1" style={{ borderColor: getRandomColor() }}>
+    <div
+      className={`ch1 ${letter < 10 ? 'pics' : ''}`}
+      style={{ borderColor: getRandomColor() }}
+    >
       <h1>{letter}</h1>
+      {letter < 10 && (
+        <div className="flex">
+          {new Array(+letter).fill(0).map((_, i) => {
+            return (
+              <div
+                key={i}
+                className="item"
+                style={{ backgroundImage: `url(${images[img]})` }}
+              ></div>
+            )
+          })}
+        </div>
+      )}
     </div>
   )
 }
