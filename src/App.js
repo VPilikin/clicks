@@ -78,7 +78,7 @@ function App() {
         l === 'Backspace'
       ) {
         ++count
-        if (count > 30) count = 0
+        if (count > 40) count = 0
         setLetter(count)
       } else {
         if (l.toLowerCase() in enToRu) {
@@ -97,10 +97,7 @@ function App() {
   }, [])
 
   return (
-    <div
-      className={`ch1 ${letter < 10 ? 'pics' : ''}`}
-      style={{ borderColor: getRandomColor() }}
-    >
+    <div className="ch1" style={{ borderColor: getRandomColor() }}>
       <h1>{letter}</h1>
       {letter < 10 && (
         <div className="flex">
