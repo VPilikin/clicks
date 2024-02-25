@@ -58,6 +58,11 @@ const enToRu = {
   '`': 'ё',
 }
 
+const randomProperty = function (obj) {
+  const keys = Object.keys(obj)
+  return obj[keys[(keys.length * Math.random()) << 0]]
+}
+
 function App() {
   const [letter, setLetter] = useState('')
   const [img, setImg] = useState(1)
@@ -71,11 +76,13 @@ function App() {
     const onKeypress = (e) => {
       let l = e.key
       if (l > 0) count = l
+      if (l === 'Enter') l = randomProperty(enToRu)
       if (
-        l === 'Enter' ||
         l === 'ContextMenu' ||
         l === ' ' ||
-        l === 'Backspace'
+        l === 'Backspace' ||
+        l === '§' ||
+        l === '>'
       ) {
         ++count
         if (count > 40) count = 0
@@ -96,8 +103,16 @@ function App() {
     }
   }, [])
 
+  const handleClick = () => {
+    setLetter(Math.floor(Math.random() * 99))
+  }
+
   return (
-    <div className="ch1" style={{ borderColor: getRandomColor() }}>
+    <div
+      onClick={(e) => handleClick(e)}
+      className="ch1"
+      style={{ borderColor: getRandomColor() }}
+    >
       <h1>{letter}</h1>
       {letter < 10 && (
         <div className="flex">
